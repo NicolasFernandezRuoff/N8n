@@ -60,7 +60,7 @@ El motor interactivo del ecosistema que evalúa las respuestas en tiempo real y 
 
 ---
 
-## 5. Servicio Motor de Podcasts (Servicio Satélite)
+## 5. Servicio Motor de Podcasts 
 Microservicio independiente activado a demanda para transformar texto denso en material auditivo.
 
 <img src="Imagenes\Flujo5.jpeg" alt="Flujo 5">
