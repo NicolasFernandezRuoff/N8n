@@ -1,0 +1,17 @@
+@startuml
+title Flujo 3: Editor y Publicador Asíncrono
+
+start
+:Webhook / Email Trigger\n(Escucha la respuesta del Profesor al correo);
+
+if (¿Aprobó el examen directamente?) then (Sí)
+  :HTTP Request (Actualizar BD a PUBLICADO);
+  :Notificar alumnos vía WA/Telegram: "¡Nuevo examen disponible!";
+else (Respondió con correcciones)
+  :AI Agent (Interpreta el mail y modifica el JSON del examen);
+  :HTTP Request (Actualizar BD con nueva versión);
+  :Send Email (Enviar versión final al profesor confirmando cambios);
+endif
+
+stop
+@enduml

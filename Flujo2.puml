@@ -1,0 +1,18 @@
+@startuml
+title Flujo 2: Creador de Exámenes Oficiales
+
+start
+:Recibe Payload (PDF y user_id) del Router;
+:HTTP Request (Descarga PDF)\n<<Binarios>>\n;
+:Extract Text y Split in Batches\n<<Iteración>>\n;
+
+repeat
+  :AI Agent (Genera borrador del examen);
+repeat while (¿Quedan fragmentos de texto?)
+
+:Guardar JSON temporal en BD (Estado: PENDIENTE_REVISION);
+
+:Send Email (Al Profesor)\n"Examen generado. Responda este correo si desea editar las preguntas, o haga clic aquí para aprobar."\n<<HITL>>\n;
+
+stop
+@enduml

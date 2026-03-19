@@ -1,0 +1,30 @@
+@startuml
+title Flujo 4: Tutor Interactivo y Boletín Final
+
+start
+:Recibe Payload del Router;
+
+if (¿Es un inicio de sesión nuevo?) then (Sí, viene del flujo 1)
+  :AI Agent genera Quiz rápido;
+  :Guardar en BD e iniciar sesión (Estado: EN_CURSO);
+  :Enviar Pregunta 1;
+  stop
+else (No, es una respuesta del alumno)
+endif
+
+:Window Buffer Memory (Usa sessionId)\n<<Memoria>>\n;
+:Consultar BD (Traer respuesta correcta y estado actual);
+
+:AI Agent Evaluador\n(Valida respuesta del alumno y asigna puntaje);
+:Actualizar BD (Suma puntaje, avanza pregunta);
+
+if (¿Era la última pregunta?) then (No)
+  :Enviar siguiente pregunta;
+else (Sí)
+  :Generar PDF del Boletín de Calificaciones\n<<Binarios>>\n;
+  :Send Email (Envía PDF al alumno);
+  :Actualizar BD (Estado: FINALIZADO);
+endif
+
+stop
+@enduml

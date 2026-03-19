@@ -1,0 +1,28 @@
+@startuml
+title Flujo 1: Router y Orquestador Principal
+
+start
+:Webhook (WhatsApp / Telegram)\n<<Trigger Dinámico>>\n;
+:Edit Fields / Set\n(Extrae user_id);
+
+if (¿El mensaje contiene un PDF adjunto?) then (Sí)
+  :HTTP Request (Enviar mensaje al usuario)\n"Archivo recibido. ¿Querés generar un examen o un podcast?";
+  :Wait Node (Esperar respuesta de texto del usuario)\n;
+  
+  if (¿Respuesta del usuario?) then (Eligió "Podcast")
+    :Execute Workflow\n(Invoca: Flujo 5 - Motor de Podcasts)\n;
+  else (Eligió "Examen")
+    :HTTP Request (GET a BD)\n(Verificar Rol del user_id);
+    if (¿Rol del Usuario?) then (Profesor)
+      :Execute Workflow\n(Invoca: Flujo 2 - Creador de Exámenes)\n;
+    else (Alumno)
+      :Execute Workflow\n(Invoca: Flujo 4 - Iniciar Práctica)\n;
+    endif
+  endif
+
+else (No - Es un texto/audio de respuesta)
+  :Execute Workflow\n(Invoca: Flujo 4 - Evaluador Interactivo)\n;
+endif
+
+stop
+@enduml

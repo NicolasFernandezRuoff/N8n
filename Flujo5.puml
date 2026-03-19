@@ -1,0 +1,16 @@
+@startuml
+title Flujo 5: Generador de Podcasts Educativos
+
+start
+:Recibe Payload (PDF y user_id) del Router;
+:HTTP Request (Descarga PDF y extrae texto)\n<<Binarios>>\n;
+
+:AI Agent (Adapta el texto a un formato conversacional/guion);
+
+:HTTP Request (Conexión a API de OpenAI TTS / ElevenLabs);
+:Recibir Binario de Audio (.mp3 o .ogg);
+
+:HTTP Request (Envía la nota de voz al usuario vía WA/Telegram);
+
+stop
+@enduml
